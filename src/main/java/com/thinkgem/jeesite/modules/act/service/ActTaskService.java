@@ -24,7 +24,6 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
-import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.delegate.ActivityBehavior;
@@ -38,6 +37,7 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
+import org.activiti.image.impl.DefaultProcessDiagramGenerator;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -560,8 +560,7 @@ public class ActTaskService extends BaseService {
 
 		// 使用spring注入引擎请使用下面的这行代码
 		Context.setProcessEngineConfiguration(processEngine.getProcessEngineConfiguration());
-
-		return ProcessDiagramGenerator.generateDiagram(bpmnModel, "png", activeActivityIds);
+		return new DefaultProcessDiagramGenerator().generateDiagram(bpmnModel, "png", activeActivityIds,1.0);
 	}
 	
 	/**
